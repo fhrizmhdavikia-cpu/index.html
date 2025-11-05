@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>my phottoboot</title>
+        <style>
+            body { text-align: center; font-family: arial; background: #f0f0f0;}
+            video, canvas { width: 320px; height: 240px; border: 1px solid #ccc; margin-top: 10px;}
+            button {margin-top: 10px; padding: 8px 16px;}
+        </style>
+    </head>
+    <body>
+        <h2>phottoboot</h2>
+        <video id="video" autoplay></video>
+        <br>
+        <button id="capture">Ambil foto</button>
+        <canvas id="canvas"></canvas>
+        
+        <script>
+            const video = document.getElementById('video');
+            const canvas = document.getElementById('canvas');
+            const context = canvas.getContext('2');
+
+            //minta izin kamera
+            navigator.mediaDevices.getUserMedia({ video: true})
+            .then(stream => {
+                video.srcObject = stream;
+            })
+            .catch(err => {
+                alert("tidak bisa mengakses kamera: " + err);
+            });
+            //ambil foto
+            document.getElementById('capture').addEventListener('click', () => {
+                context.drawImage(video,0,0, canvas.width, canvas.height);
+            });
+        </script>
+    </body>
+</html>
